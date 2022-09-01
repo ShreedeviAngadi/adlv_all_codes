@@ -1,0 +1,38 @@
+module associative_array;
+  //array declaration
+  int a_array[*];
+  int index;
+  initial begin
+    // allocating array and assinging values to it
+    repeat(3) begin
+      a_array[index]=index*2;
+      index=index+4;
+    end
+    // num()-associative array method
+    $display("\t number of entries in a_array is %d",a_array.num());
+    $display("---associative array a_array entries and values are---");
+    foreach(a_array[i])$display("\t a_array[%0d]\t=%0d",i,a_array[i]);
+    $display("---------------------------");
+    //first()-associative array method
+    a_array.first(index);
+    $display("\first entry is \t a_array[%0d]=%0d",index,a_array[index]);
+     //last()-associative array method
+    a_array.last(index);
+    $display("\last entry is \t a_array[%0d]=%0d",index,a_array[index]);
+  end
+  //exists()-associative array method
+  if(a_array.exists(8))
+    $display("index 8 exists in a_array");
+  else
+    $display("index 8 doesnot exists in a_array");
+   //last()-associative array method
+    a_array.last(index);
+    $display("\last entry is \t a_array[%0d]=%0d",index,a_array[index]);
+   //prev()-associative array method
+    a_array.prev(index);
+  $display("\prev entry is \t a_array[%0d]=%0d",index,a_array[index]);
+  //next()-associative array method
+    a_array.next(index);
+  $display("\prev entry is \t a_array[%0d]=%0d",index,a_array[index]);
+  end
+    endmodule
