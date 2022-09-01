@@ -1,0 +1,11 @@
+class packet;
+  rand bit[3:0] addr;
+  rand bit[3:0] start_addr;
+  rand bit[3:0] end_addr;
+  //constraint block declaration
+  //constraint addr_range{addr inside{[start_addr:end_addr]};}
+  //constraint addr_range{addr inside{[5:10]};}
+  //constraint addr_range{addr inside{[1,3,5,7,9]};}
+  //constraint addr_range{addr inside{1,3,[5:10],12,[13:15]};}
+  constraint addr_range{addr!(inside{[5:10]});}
+endclass
