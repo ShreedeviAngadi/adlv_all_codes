@@ -1,0 +1,28 @@
+class sv_class;
+  //class properties
+  int x;
+  //method-1
+  //task add(int i,j);
+    //x=i+j;
+  //endtask
+  //method-1
+  task set(int i);
+    x=i;//operation body of task
+  endtask
+  //method-2
+  function int get();
+    return x;
+  endfunction
+endclass
+
+module sv_class_ex;
+  sv_class class_1=new(); //creating object
+  sv_class class_2=new(); //creating handle and object
+   initial begin
+  // accessing class methods
+  class_1.set(10); //set is a task which sends the value
+  class_2.set(20);
+  $display("\t class_1::value of x=%0d",class_1.get()); //get is function to get the values from property value x
+  $display("\t class_2::value of x=%0d",class_2.get());
+  end
+endmodule
