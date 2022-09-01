@@ -1,0 +1,44 @@
+class monitor;
+  
+  //creating virtual interface handle
+  virtual intf vif;
+  // creating mailbox handle
+  mailbox mon2scb;
+  // constructor
+  function new(virtual intf vif,mailbox mon2scb);
+    //getting the interface
+    this.vif=vif;
+    //getting the mailbox handles from environment
+    this.mon2scbe=mon2scb;
+  endfunction
+  //reset task, reset the interface signals to default/initial values
+  task reset;
+    wait(vif.reset);
+    $display("[DRIVER]-----reset started-----");
+    vif.a<=0;
+    vif.b<=0;
+    vif.valid<=0;
+    wait(!vif.reset);
+    $display("[DRIVER]------reset ended-----");
+  endtask
+  
+  //drivers the transaction items to interface signals
+  task main;
+    forever begin
+      transaction trans;
+      trans=new();
+      @(posedge vif.clk);
+      wait(vif.valid);
+    
+      trans.a=vif.a;
+    trans.b=vif.b;
+       @(posedge vif.clk);
+    
+      trans.c=vif.c;
+      @(posedge vif.clk);
+      mon2scb.put(trans);
+      trans.display("[MONITOR]");
+    end
+  endtask
+  
+endclass
