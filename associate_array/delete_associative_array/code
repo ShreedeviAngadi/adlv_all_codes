@@ -1,0 +1,34 @@
+module associative_array;
+  //array declaration
+  int array[*];
+  int index;
+  initial begin
+    // allocating array and assinging values to it
+    repeat(5) begin
+      array[index]=index*2;
+      index = index+4;
+    end
+    //exists()-associative array method//exists
+    if(array.exists(16))
+      $display("Index 8 exists in array");
+    else
+      $display("Index 8 does not exist in array");
+     //first()-associative array method
+    array.first(index);
+    $display("\tFirst entry is \t array[%0d] = %0d",index, array[index]);
+    //last()-associative array method
+    array.last(index);
+    $display("\tLast entry is \t array[%0d] = %0d",index, array[index]);
+   //prev()-associative array method
+    array.prev(index);
+    $display("\tEntry is array[%0d] = %0d",index, array[index]);
+   //next()-associative array method
+    array.next(index);
+    $display("\tEntry is array[%0d] = %0d",index, array[index]);
+      //delete()-associative array method
+    $display("[Before delete] Associative array size is %0d", array.size());
+    array.delete();
+    //delete
+    $display("[After delete] Associative array size is %0d", array.size());
+  end
+endmodule
