@@ -1,0 +1,22 @@
+module queues_array;
+  //declaration
+  bit[31:0]queue_1[$];//unbounded queue
+  int lvar;
+  initial begin
+    //queue initialization
+    queue_1={0,1,2,3};
+    //size method
+    $display("--queue_1 size %0d--",queue_1.size());
+    // push_front method
+    queue_1.push_front(22);
+    $display("--queue_1 after push_front size %0d--",queue_1.size());
+     // push_back method
+    queue_1.push_back(44);
+    $display("--queue_1 after push_back size %0d--",queue_1.size());
+     // pop_front method
+    lvar=queue_1.pop_front();
+    $display("--queue_1after pop_front size %0d--",lvar);
+    // pop_back method
+    lvar=queue_1.pop_back();
+    $display("--queue_1 after pop_back size %0d--",lvar);
+  end
