@@ -1,0 +1,44 @@
+class driver;
+  //used to count the number of transactions
+  int no_transactions;
+  //creating virtual interface handle
+  virtual intf vif;
+  // creating mailbox handle
+  mailbox gen2driv;
+  // constructor
+  function new(virtual intf vif,mailbox gen2driv);
+    //getting the interface
+    this.vif=vif;
+    //getting the mailbox handles from environment
+    this.gen2drive=gen2driv;
+  endfunction
+  //reset task, reset the interface signals to default/initial values
+  task reset;
+    wait(vif.reset);
+    $display("[DRIVER]-----reset started-----");
+    vif.a<=0;
+    vif.b<=0;
+    vif.valid<=0;
+    wait(!vif.reset);
+    $display("[DRIVER]------reset ended-----");
+  endtask
+  
+  //drivers the transaction items to interface signals
+  task main;
+    forever begin
+      transaction trans;
+      gen2driv.get(trans);
+      @(posedge vif.clk);
+      vif.valid<=1;
+      vif.a<=trans.a;
+    vif.b<=trans.b;
+       @(posedge vif.clk);
+      vif.valid<=0;
+      trans.c<=vif.c;
+      @(posedge vif.clk);
+      trans.display("[DRIVER]");
+      no_transactions++;
+    end
+  endtask
+  
+endclass
