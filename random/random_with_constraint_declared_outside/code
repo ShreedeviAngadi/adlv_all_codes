@@ -1,0 +1,18 @@
+class packet;
+  rand bit[2:0] addr1;
+  //constraint block declaration
+  constraint addr1_range;
+endclass
+//constraint implementation outside class body
+constraint packet::addr1_range{addr1>5;}
+
+module rand_methods;
+  initial begin
+    packet pkt;
+    pkt=new();
+    repeat(10)begin
+      pkt.randomize();
+      $display("\t addr1=%0d",pkt.addr1);
+    end
+  end
+endmodule
